@@ -25,6 +25,7 @@ class Firebase {
     this.googleProvider = new app.auth.GoogleAuthProvider();
     this.facebookProvider = new app.auth.FacebookAuthProvider();
     this.twitterProvider = new app.auth.TwitterAuthProvider();
+    this.githubProvider = new app.auth.GithubAuthProvider();
   }
 
   // *** Auth API ***
@@ -38,6 +39,9 @@ class Firebase {
   doSignInWithGoogle = () =>
     this.auth.signInWithPopup(this.googleProvider);
 
+  doSignInWithGithub = () =>
+    this.auth.signInWithPopup(this.githubProvider);
+
   doSignInWithFacebook = () =>
     this.auth.signInWithPopup(this.facebookProvider);
 
@@ -46,24 +50,25 @@ class Firebase {
 
   doSignOut = () => this.auth.signOut();
 
-  doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+  doPasswordReset = (email) =>
+    this.auth.sendPasswordResetEmail(email);
 
   doSendEmailVerification = () =>
     this.auth.currentUser.sendEmailVerification({
       url: window.location.href,
     });
 
-  doPasswordUpdate = password =>
+  doPasswordUpdate = (password) =>
     this.auth.currentUser.updatePassword(password);
 
   // *** Merge Auth and DB User API *** //
 
   onAuthUserListener = (next, fallback) =>
-    this.auth.onAuthStateChanged(authUser => {
+    this.auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         this.user(authUser.uid)
           .get()
-          .then(snapshot => {
+          .then((snapshot) => {
             const dbUser = snapshot.data();
 
             // merge auth and db user
@@ -84,13 +89,13 @@ class Firebase {
 
   // *** User API ***
 
-  user = uid => this.db.doc(`users/${uid}`);
+  user = (uid) => this.db.doc(`users/${uid}`);
 
   users = () => this.db.collection('users');
 
   posts = () => this.db.collection('posts');
 
-  post = post => this.posts().where('slug', '==', post.slug);
+  post = (post) => this.posts().where('slug', '==', post.slug);
 }
 
 let firebase;

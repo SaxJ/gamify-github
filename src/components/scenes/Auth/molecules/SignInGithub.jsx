@@ -22,10 +22,10 @@ class SignInGithub extends Component {
     this.state = { error: null };
   }
 
-  onSubmit = event => {
+  onSubmit = (event) => {
     this.props.firebase
-      .doSignInWithFacebook()
-      .then(socialAuthUser => {
+      .doSignInWithGithub()
+      .then((socialAuthUser) => {
         // Create a user in your Firebase Realtime Database too
         return this.props.firebase.user(socialAuthUser.user.uid).set({
           username: socialAuthUser.additionalUserInfo.profile.name,
@@ -37,7 +37,7 @@ class SignInGithub extends Component {
         this.setState({ error: null });
         navigate(HOME);
       })
-      .catch(error => {
+      .catch((error) => {
         if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
           error.message = ERROR_MSG_ACCOUNT_EXISTS;
         }
@@ -50,12 +50,11 @@ class SignInGithub extends Component {
 
   render() {
     const { error } = this.state;
+    const { className } = this.props;
+    const classString = `login__content__providers__item login__content__providers__item--github ${className}`;
 
     return (
-      <form
-        className="login__content__providers__item login__content__providers__item--github"
-        onSubmit={this.onSubmit}
-      >
+      <form className={classString} onSubmit={this.onSubmit}>
         <button type="submit">
           <FaGithub />
         </button>

@@ -4,30 +4,9 @@ import { withFirebase } from '../../../../../utils/Firebase';
 import SocialLoginToggle from './atoms/SocialLoginToggle';
 import {
   FaGithub,
-  FaFacebookF,
-  FaGoogle,
-  FaTwitter,
 } from 'react-icons/fa';
 
 const SIGN_IN_METHODS = [
-  {
-    id: 'google.com',
-    provider: 'googleProvider',
-    name: 'google',
-    Icon: FaGoogle,
-  },
-  {
-    id: 'facebook.com',
-    provider: 'facebookProvider',
-    name: 'facebook',
-    Icon: FaFacebookF,
-  },
-  {
-    id: 'twitter.com',
-    provider: 'twitterProvider',
-    name: 'twitter',
-    Icon: FaTwitter,
-  },
   {
     id: 'github.com',
     provider: 'githubProvider',

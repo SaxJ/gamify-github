@@ -11,6 +11,7 @@ class Home extends Component {
 
   state = {
     posts: [],
+    users: [],
     loading: true,
     title: '',
     description: '',
@@ -20,7 +21,7 @@ class Home extends Component {
     if (this.props.firebase && !this._initFirebase) {
       this._initFirebase = true;
 
-      this.getPosts();
+      this.getUsers();
     }
   };
 
@@ -32,14 +33,28 @@ class Home extends Component {
     this.firebaseInit();
   }
 
+  getUsers = () => {
+    const { firebase } = this.props;
+    firebase
+      .users()
+      .get()
+      .then((snapshot) => {
+        const data = snapshot.docs.map((item) => item.data());
+        this.setState({
+          users: data,
+          loading: false,
+        });
+      });
+  };
+
   getPosts = () => {
     const { firebase } = this.props;
 
     firebase
       .posts()
       .get()
-      .then(querySnapshot => {
-        const data = querySnapshot.docs.map(item => item.data());
+      .then((querySnapshot) => {
+        const data = querySnapshot.docs.map((item) => item.data());
         this.setState({
           posts: data,
           loading: false,
@@ -47,7 +62,7 @@ class Home extends Component {
       });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     const { title, description, posts } = this.state;
     const { firebase } = this.props;
@@ -60,10 +75,7 @@ class Home extends Component {
     const latestPost = {
       title,
       slug:
-        slug
-          .toLowerCase()
-          .split(' ')
-          .join('-') +
+        slug.toLowerCase().split(' ').join('-') +
         Math.floor(Math.random() * 200) +
         1,
       description,
@@ -82,7 +94,7 @@ class Home extends Component {
     });
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({
       [name]: value,
@@ -90,7 +102,7 @@ class Home extends Component {
   };
 
   render() {
-    const { posts, description, title, loading } = this.state;
+    const { posts, users, description, title, loading } = this.state;
 
     if (loading) return <Loading />;
 
@@ -129,6 +141,12 @@ class Home extends Component {
                 type="submit"
               />
             </form>
+          </div>
+
+          <div className="users">
+            {users &&
+              users.length > 0 &&
+              users.map((user) => <p>{user.email}</p>)}
           </div>
 
           <div className="home__posts__items">
