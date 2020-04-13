@@ -21,7 +21,7 @@ class Home extends Component {
     if (this.props.firebase && !this._initFirebase) {
       this._initFirebase = true;
 
-      this.getUsers();
+      this.getStats();
     }
   };
 
@@ -32,6 +32,20 @@ class Home extends Component {
   componentDidUpdate() {
     this.firebaseInit();
   }
+
+  getStats = () => {
+    const { firebase } = this.props;
+    firebase
+      .stats()
+      .get()
+      .then((snapshot) => {
+        const data = snapshot.docs.map((item) => item.data());
+        this.setState({
+          stats: data,
+          loading: false,
+        });
+      });
+  };
 
   getUsers = () => {
     const { firebase } = this.props;
@@ -141,6 +155,12 @@ class Home extends Component {
                 type="submit"
               />
             </form>
+          </div>
+
+          <div className="stats">
+            {stats &&
+              stats.length > 0 &&
+              stats.map((stat) => <p>{stat.name}</p>)}
           </div>
 
           <div className="users">
