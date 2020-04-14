@@ -12,6 +12,7 @@ class Home extends Component {
   state = {
     posts: [],
     users: [],
+    stats: [],
     loading: true,
     title: '',
     description: '',
@@ -116,7 +117,7 @@ class Home extends Component {
   };
 
   render() {
-    const { posts, users, description, title, loading } = this.state;
+    const { stats, description, title, loading } = this.state;
 
     if (loading) return <Loading />;
 
@@ -161,44 +162,6 @@ class Home extends Component {
             {stats &&
               stats.length > 0 &&
               stats.map((stat) => <p>{stat.name}</p>)}
-          </div>
-
-          <div className="users">
-            {users &&
-              users.length > 0 &&
-              users.map((user) => <p>{user.email}</p>)}
-          </div>
-
-          <div className="home__posts__items">
-            {posts &&
-              posts.length > 0 &&
-              posts.map((item, id) => (
-                <div key={id} className="home__post">
-                  <Link
-                    className="home__post__title"
-                    to={'/post/' + item.slug}
-                  >
-                    <Image
-                      className="home__post__image"
-                      filename="gatsby-post-bg.jpg"
-                    />
-                    <div className="home__post__text">
-                      {item.title && item.title < 30
-                        ? item.title
-                        : item.title.slice(0, 30) + '...'}
-                      <div
-                        className="home__post__description"
-                        key={id}
-                      >
-                        {item.description &&
-                        item.description.length > 150
-                          ? item.description.slice(0, 150)
-                          : item.description + '...'}
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              ))}
           </div>
         </div>
       </div>
