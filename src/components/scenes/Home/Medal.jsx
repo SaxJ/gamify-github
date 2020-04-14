@@ -10,7 +10,9 @@ const getColour = (score) => {
 
 export const Medal = ({ label, score }) => (
   <div className="medal-wrapper">
-    <div className="label">{label}</div>
+    <div className="label">
+      <span>{label}</span>
+    </div>
     <div className={`medal ${getColour(score)}`}>
       <Pic />
       <div className="overlay" />
