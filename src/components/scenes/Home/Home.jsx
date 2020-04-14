@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'gatsby';
 import { withFirebase } from '../../../utils/Firebase';
-import Input from '../../atoms/Input';
-import Button from '../../atoms/Button';
 import Loading from '../../atoms/Loading';
-import Image from '../../atoms/Image';
+import { MedalSection } from './MedalSection';
 
 class Home extends Component {
   _initFirebase = false;
@@ -12,7 +9,7 @@ class Home extends Component {
   state = {
     posts: [],
     users: [],
-    stats: [],
+    medals: [],
     loading: true,
     title: '',
     description: '',
@@ -42,7 +39,7 @@ class Home extends Component {
       .then((snapshot) => {
         const data = snapshot.docs.map((item) => item.data());
         this.setState({
-          stats: data,
+          medals: data,
           loading: false,
         });
       });
@@ -117,52 +114,20 @@ class Home extends Component {
   };
 
   render() {
-    const { stats, description, title, loading } = this.state;
+    const { medals, loading } = this.state;
 
     if (loading) return <Loading />;
 
     return (
       <div className="home container">
         <div className="home__details">
-          <h1 className="home__title">Home Page</h1>
-          <p className="home__description">
-            The Home Page is accessible by every signed in user.
-          </p>
+          <h1 className="home__title">Medal Tally</h1>
         </div>
 
-        <div className="home__posts">
-          <div className="home__posts__form">
-            <div className="home__posts__form__title">Add Posts</div>
-            <form onSubmit={this.handleSubmit}>
-              <Input
-                name="title"
-                type="text"
-                value={title}
-                labelName="Title"
-                onChange={this.handleChange}
-                required
-              />
-              <Input
-                name="description"
-                type="text"
-                value={description}
-                labelName="Description"
-                onChange={this.handleChange}
-                required
-              />
-
-              <Button
-                className="home__posts__form__btn"
-                type="submit"
-              />
-            </form>
-          </div>
-
-          <div className="stats">
-            {stats &&
-              stats.length > 0 &&
-              stats.map((stat) => <p>{stat.name}</p>)}
-          </div>
+        <div className="medals">
+          {medals &&
+            medals.length > 0 &&
+            medals.map((medal) => <MedalSection stats={medal} />)}
         </div>
       </div>
     );

@@ -1,77 +1,93 @@
 .home {
-  @include breakpoint('to-tablet-l') {
-    display: flex;
-    flex-direction: column;
-  }
-  &__details {
-    display: flex;
-    flex-direction: column;
-    margin: 30px 0;
-  }
-  &__title {
-    margin-bottom: 5px;
-  }
+  width: 800px;
+  margin: auto;
+  color: #6c63ff;
+  text-align: center;
 
-  &__posts {
-    &__form {
-      width: 30%;
-      display: flex;
-      flex-direction: column;
-      @include breakpoint('to-tablet-l') {
-        width: 100%;
-      }
-      &__title {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-      }
-      &__btn {
-        width: 30%;
-        margin: 0;
-        margin-bottom: 30px;
-        @include breakpoint('to-tablet-l') {
-          width: 100%;
-        }
-      }
-    }
-    &__items {
-      margin-top: 50px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      grid-gap: 70px;
-      @include breakpoint('to-tablet-l') {
-      }
-    }
-  }
-  &__post {
+  .medal-section {
     display: flex;
-    flex-direction: column;
-    @include breakpoint('phone') {
-      word-wrap: break-word;
-    }
-    &__image {
-      height: 200px;
-    }
-    &__text {
-      margin-top: 20px;
-    }
-    &__title {
-      font-size: 1.5rem;
-      font-weight: 500;
-      color: #2b2b2b;
-      text-decoration: none;
+    flex-wrap: wrap;
+
+    .name {
+      width: 100%;
+      text-align: left;
+      font-size: 25px;
+      padding: 15px 0px;
+      border-bottom: 1px solid #6c63ff;
       margin-bottom: 30px;
     }
-    &__description {
-      color: #8f8289;
-      word-break: break-all;
-      font-size: 1rem;
-      font-weight: 400;
-    }
-    &:hover {
-      cursor: pointer;
 
-      .home__post__title {
-        color: $color-main !important;
+    .medal-wrapper {
+      width: 100px;
+      display: inline-block;
+      box-sizing: border-box;
+    }
+
+    .medal {
+      width: 100px;
+      height: 100px;
+      display: inline-block;
+      box-sizing: border-box;
+      position: relative;
+
+      .label {
+        margin-bottom: 40px;
+      }
+
+      .hover {
+        visibility: hidden;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 2;
+      }
+    }
+
+    .medal:hover {
+      .hover {
+        visibility: visible;
+        background-color: #21242b;
+        opacity: 0.9;
+        padding-top: 30px;
+      }
+    }
+
+    .bronze {
+      filter: brightness(0.39) contrast(2.07) hue-rotate(-321deg)
+        saturate(3) sepia(1);
+    }
+
+    .silver {
+      filter: none;
+    }
+
+    .gold {
+      .overlay {
+        background-color: rgba(234, 177, 7, 0.5);
+        visibility: visible;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        border-radius: 75px;
+        z-index: 1;
+      }
+    }
+
+    .none {
+      .overlay {
+        background-color: rgba(234, 5, 7, 0.4);
+        visibility: visible;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        border-radius: 75px;
+        z-index: 1;
       }
     }
   }

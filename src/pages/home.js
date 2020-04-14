@@ -8,7 +8,7 @@ import {
 } from '../utils/Session';
 import Home from '../components/scenes/Home/Home';
 
-const condition = authUser => !!authUser;
+const condition = (authUser) => !!authUser;
 const HomePage = compose(
   withEmailVerification,
   withAuthorization(condition),
@@ -16,7 +16,7 @@ const HomePage = compose(
 
 export default () => {
   return (
-    <Layout>
+    <Layout hideNav>
       <HomePage />
     </Layout>
   );
